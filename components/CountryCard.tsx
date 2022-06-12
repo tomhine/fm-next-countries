@@ -8,18 +8,18 @@ type CountryCardProps = {
 
 const CountryCard = ({ data }: CountryCardProps) => {
   return (
-    <Link href={`/${data.cca3}`}>
+    <Link href={`/${data.alpha3Code}`}>
       <a>
         <article className="flex w-66 flex-col">
           <Image
             height={160}
             width={264}
             src={data.flags.png}
-            alt={`${data.name.common} flag`}
+            alt={`${data.name} flag`}
             className="rounded-t-md"
           />
           <section className="space-y-6 rounded-b-md bg-element-light px-6 py-7 text-text-light dark:bg-element-dark dark:text-text-dark">
-            <h2 className="text-lg font-extrabold">{data.name.common}</h2>
+            <h2 className="text-lg font-extrabold">{data.name}</h2>
             <div>
               <span className="flex items-center gap-2">
                 <h3 className="font-semibold">Population:</h3>

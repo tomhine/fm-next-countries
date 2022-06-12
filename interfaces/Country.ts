@@ -3,11 +3,8 @@ export type CountryData = {
     png: string;
     svg: string;
   };
-  name: {
-    common: string;
-    official: string;
-  };
-  cca3: string;
+  name: string;
+  alpha3Code: string;
   capital: string[];
   region: string;
   population: number;

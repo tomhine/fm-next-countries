@@ -5,15 +5,15 @@ import { useState } from "react";
 import CountryCard from "../components/CountryCard";
 
 const Home: NextPage<{ countries: CountryData[] }> = ({ countries }) => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredCountries =
     searchQuery === ""
       ? countries
-      : countries.filter(country => country.name.common.toLowerCase().includes(searchQuery));
+      : countries.filter(country => country.name.toLowerCase().includes(searchQuery));
 
   const cardList = filteredCountries.map(country => (
-    <li key={country.cca3}>
+    <li key={country.alpha3Code}>
       <CountryCard data={country} />
     </li>
   ));
@@ -53,7 +53,7 @@ export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(
-    "https://restcountries.com/v3.1/all?fields=cca3,name,flags,population,region,capital",
+    process.env.API_BASE + "all?fields=alpha3Code,name,flags,population,region,capital",
   );
   const data = await res.json();
 
