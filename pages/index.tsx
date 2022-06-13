@@ -11,7 +11,7 @@ const Home: NextPage<{ countries: CountryData[] }> = ({ countries }) => {
   const [regionFilter, setRegionFitler] = useState("");
   const [filterMenuOpen, setFilterMenuOpen] = useState(false);
 
-  const regions = ["africa", "america", "asia", "europe", "oceania"];
+  const regions = ["none", "africa", "americas", "asia", "europe", "oceania", "polar"];
 
   const filteredCountries =
     regionFilter === ""
@@ -27,6 +27,11 @@ const Home: NextPage<{ countries: CountryData[] }> = ({ countries }) => {
 
   const toggleFilterMenu = () => setFilterMenuOpen(c => !c);
   const closeFilterMenu = () => setFilterMenuOpen(false);
+
+  const handleRegionFilterSelect = (region: string) => {
+    if (region === "none") setRegionFitler("");
+    else setRegionFitler(region);
+  };
 
   const cardList = searchedCountries.map(country => (
     <li key={country.alpha3Code}>
@@ -52,31 +57,35 @@ const Home: NextPage<{ countries: CountryData[] }> = ({ countries }) => {
           />
         </div>
         {/* Filter select */}
-        <div className="relative">
-          <button
-            type="button"
-            className="text-sm pl-8 pr-6 py-4 max-w-max bg-element-light dark:bg-element-dark text-text-light dark:text-text-dark rounded-md flex items-center gap-8"
-            onClick={toggleFilterMenu}
-          >
-            <span>Filter by Region</span>
-            <ChevronDownIcon className="h-5 w-5" />
-          </button>
-          {filterMenuOpen && (
-            <ClickAwayListener onClickAway={closeFilterMenu}>
+        <ClickAwayListener onClickAway={closeFilterMenu}>
+          <div className="relative w-[208px]">
+            <button
+              type="button"
+              className="text-sm pl-8 w-[208px] pr-6 py-4 bg-element-light dark:bg-element-dark text-text-light dark:text-text-dark rounded-md flex items-center gap-8 justify-between"
+              onClick={toggleFilterMenu}
+            >
+              <span className={`${regionFilter !== "" && "capitalize"}`}>
+                {regionFilter === "" ? "Filter by Region" : regionFilter}
+              </span>
+              <ChevronDownIcon className="h-5 w-5" />
+            </button>
+            {filterMenuOpen && (
               <ul className="absolute z-10 bg-element-light dark:bg-element-dark mt-1 left-0 w-full rounded-md p-2">
                 {regions.map(region => (
                   <li
                     key={region}
-                    className="capitalize py-2 px-4 rounded-md cursor-pointer hover:bg-background-light dark:hover:bg-background-dark/60"
-                    onClick={() => setRegionFitler(region)}
+                    className={`${
+                      region === "none" && "opacity-50"
+                    } capitalize py-2 px-4 rounded-md cursor-pointer hover:bg-background-light dark:hover:bg-background-dark/60`}
+                    onClick={() => handleRegionFilterSelect(region)}
                   >
                     {region}
                   </li>
                 ))}
               </ul>
-            </ClickAwayListener>
-          )}
-        </div>
+            )}
+          </div>
+        </ClickAwayListener>
       </div>
       <ul className="xl:grid-cols-43 xl:grid-cols-43 mt-8 grid grid-cols-1 items-center justify-items-center gap-8 md:grid-cols-2 lg:mt-11 lg:grid-cols-3 xl:grid-cols-4">
         {cardList}
