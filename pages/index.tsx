@@ -5,6 +5,7 @@ import { useState } from "react";
 import CountryCard from "../components/CountryCard";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import ClickAwayListener from "react-click-away-listener";
+import Head from "next/head";
 
 const Home: NextPage<{ countries: CountryData[] }> = ({ countries }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -47,6 +48,9 @@ const Home: NextPage<{ countries: CountryData[] }> = ({ countries }) => {
 
   return (
     <>
+      <Head>
+        <title>REST Countries App - Frontend Mentor</title>
+      </Head>
       <div className="flex w-full flex-col gap-10 md:flex-row md:items-center md:justify-between md:gap-0">
         <div className="flex items-center gap-4 rounded-md bg-element-light px-8 py-4 text-input-light dark:bg-element-dark dark:text-text-dark lg:w-1/4">
           <SearchIcon className="h-6 w-6" />
