@@ -21,18 +21,18 @@ const CountryCard = ({ data }: CountryCardProps) => {
           <section className="space-y-6 rounded-b-md bg-element-light px-6 py-7 text-text-light dark:bg-element-dark dark:text-text-dark">
             <h2 className="text-lg font-extrabold">{data.name}</h2>
             <div>
-              <span className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <h3 className="font-semibold">Population:</h3>
                 <p>{data.population.toLocaleString()}</p>
-              </span>
-              <span className="flex items-center gap-2">
+              </div>
+              <div className="flex items-center gap-2">
                 <h3 className="font-semibold">Region:</h3>
                 <p>{data.region}</p>
-              </span>
-              <span className="flex items-center gap-2">
+              </div>
+              <div className="flex items-center gap-2">
                 <h3 className="font-semibold">Capital:</h3>
                 <p>{data.capital}</p>
-              </span>
+              </div>
             </div>
           </section>
         </article>
