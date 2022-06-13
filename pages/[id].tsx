@@ -105,7 +105,7 @@ const DetailsPage: NextPage<{ country: CountryDetails; borderCountries: BorderCo
             <h3 className="font-semibold">Border Countries:</h3>
             <ul className="flex flex-wrap gap-3">
               {borderCountries.length > 1 &&
-                borderCountries.map(border => (
+                borderCountries?.map(border => (
                   <Link href={`/${border.alpha3Code}`} key={border.alpha3Code}>
                     <a>
                       <li className="rounded bg-element-light px-6 py-1 text-text-light shadow dark:bg-element-dark dark:text-text-dark">

@@ -3,16 +3,32 @@ import type { GetStaticProps, NextPage } from "next";
 import type { CountryData } from "../interfaces/Country";
 import { useState } from "react";
 import CountryCard from "../components/CountryCard";
+import { ChevronDownIcon } from "@heroicons/react/solid";
+import ClickAwayListener from "react-click-away-listener";
 
 const Home: NextPage<{ countries: CountryData[] }> = ({ countries }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [regionFilter, setRegionFitler] = useState("");
+  const [filterMenuOpen, setFilterMenuOpen] = useState(false);
+
+  const regions = ["africa", "america", "asia", "europe", "oceania"];
 
   const filteredCountries =
-    searchQuery === ""
+    regionFilter === ""
       ? countries
-      : countries.filter(country => country.name.toLowerCase().includes(searchQuery));
+      : countries.filter(country => country.region.toLowerCase() === regionFilter);
 
-  const cardList = filteredCountries.map(country => (
+  const searchedCountries =
+    searchQuery === ""
+      ? filteredCountries
+      : filteredCountries.filter(country =>
+          country.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        );
+
+  const toggleFilterMenu = () => setFilterMenuOpen(c => !c);
+  const closeFilterMenu = () => setFilterMenuOpen(false);
+
+  const cardList = searchedCountries.map(country => (
     <li key={country.alpha3Code}>
       <CountryCard data={country} />
     </li>
@@ -35,11 +51,31 @@ const Home: NextPage<{ countries: CountryData[] }> = ({ countries }) => {
             onChange={handleSearchInput}
           />
         </div>
-        <div className="rounded-md bg-element-light px-8 py-4 text-sm dark:bg-element-dark">
-          <select name="region-filter" className="bg-transparent">
-            <option value="">Filter by Region</option>
-            <option value="africa">Africa</option>
-          </select>
+        {/* Filter select */}
+        <div className="relative">
+          <button
+            type="button"
+            className="text-sm pl-8 pr-6 py-4 max-w-max bg-element-light dark:bg-element-dark text-text-light dark:text-text-dark rounded-md flex items-center gap-8"
+            onClick={toggleFilterMenu}
+          >
+            <span>Filter by Region</span>
+            <ChevronDownIcon className="h-5 w-5" />
+          </button>
+          {filterMenuOpen && (
+            <ClickAwayListener onClickAway={closeFilterMenu}>
+              <ul className="absolute z-10 bg-element-light dark:bg-element-dark mt-1 left-0 w-full rounded-md p-2">
+                {regions.map(region => (
+                  <li
+                    key={region}
+                    className="capitalize py-2 px-4 rounded-md cursor-pointer hover:bg-background-light dark:hover:bg-background-dark/60"
+                    onClick={() => setRegionFitler(region)}
+                  >
+                    {region}
+                  </li>
+                ))}
+              </ul>
+            </ClickAwayListener>
+          )}
         </div>
       </div>
       <ul className="xl:grid-cols-43 xl:grid-cols-43 mt-8 grid grid-cols-1 items-center justify-items-center gap-8 md:grid-cols-2 lg:mt-11 lg:grid-cols-3 xl:grid-cols-4">
