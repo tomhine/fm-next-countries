@@ -78,7 +78,7 @@ const Home: NextPage<{ countries: CountryData[] }> = ({ countries }) => {
                     key={region}
                     className={`${
                       region === "none" && "opacity-50"
-                    } capitalize py-2 px-4 rounded-md cursor-pointer hover:bg-background-light dark:hover:bg-background-dark/60`}
+                    } capitalize py-2 px-4 rounded-md cursor-pointer hover:bg-background-light dark:hover:bg-[#24313d]`}
                     onClick={() => handleRegionFilterSelect(region)}
                   >
                     {region}
