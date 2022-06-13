@@ -136,6 +136,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  if (!params) throw new Error("route id param is not defined");
+
   const mainRes = await fetch(
     `${process.env.API_BASE}alpha/${params.id}?fields=alpha3Code,nativeName,name,population,region,subregion,capital,topLevelDomain,languages,currencies,flags,borders`,
   );

@@ -31,6 +31,8 @@ const Home: NextPage<{ countries: CountryData[] }> = ({ countries }) => {
   const handleRegionFilterSelect = (region: string) => {
     if (region === "none") setRegionFitler("");
     else setRegionFitler(region);
+
+    closeFilterMenu();
   };
 
   const cardList = searchedCountries.map(country => (
